@@ -9,14 +9,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ca.bcit.ass3.brotonel_chen.model.PartyEvent;
+
+import static ca.bcit.ass3.brotonel_chen.R.raw.potluck;
+
 /**
  * Created by woody on 31-Oct-2017.
  */
 
-public class PotluckAdapter extends ArrayAdapter<Potluck> {
+public class EventMasterAdapter extends ArrayAdapter<PartyEvent> {
     private Context mContext;
 
-    public PotluckAdapter(Context context, ArrayList<Potluck> potlucks) {
+    public EventMasterAdapter(Context context, ArrayList<PartyEvent> potlucks) {
         super(context, 0, potlucks);
         this.mContext = context;
     }
@@ -25,7 +29,7 @@ public class PotluckAdapter extends ArrayAdapter<Potluck> {
     public View getView(int position, View convertView, ViewGroup parent) {
         //final Activity activity = (Activity) mContext;
 
-        Potluck potluck = getItem(position);
+        PartyEvent partyEvent = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_row_layout, parent, false);
         }
@@ -34,9 +38,9 @@ public class PotluckAdapter extends ArrayAdapter<Potluck> {
         TextView eventDate = convertView.findViewById(R.id.textView_list_date);
         TextView eventTime = convertView.findViewById(R.id.textView_list_time);
 
-        eventName.setText(potluck.getName());
-        eventDate.setText(potluck.getDate());
-        eventTime.setText(potluck.getTime());
+        eventName.setText(partyEvent.getName());
+        eventDate.setText(partyEvent.getDate());
+        eventTime.setText(partyEvent.getTime());
 
         return convertView;
     }
