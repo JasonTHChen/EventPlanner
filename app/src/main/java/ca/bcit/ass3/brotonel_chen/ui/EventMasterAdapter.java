@@ -1,4 +1,4 @@
-package ca.bcit.ass3.brotonel_chen;
+package ca.bcit.ass3.brotonel_chen.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,9 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ca.bcit.ass3.brotonel_chen.R;
 import ca.bcit.ass3.brotonel_chen.model.PartyEvent;
-
-import static ca.bcit.ass3.brotonel_chen.R.raw.potluck;
 
 /**
  * Created by woody on 31-Oct-2017.
@@ -20,8 +19,8 @@ import static ca.bcit.ass3.brotonel_chen.R.raw.potluck;
 public class EventMasterAdapter extends ArrayAdapter<PartyEvent> {
     private Context mContext;
 
-    public EventMasterAdapter(Context context, ArrayList<PartyEvent> potlucks) {
-        super(context, 0, potlucks);
+    public EventMasterAdapter(Context context, ArrayList<PartyEvent> partyEvents) {
+        super(context, 0, partyEvents);
         this.mContext = context;
     }
 

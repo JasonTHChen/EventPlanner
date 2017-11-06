@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.bcit.ass3.brotonel_chen.MainActivity">
+    tools:context="ca.bcit.ass3.brotonel_chen.ui.MainActivity">
 
     <ListView
         android:id="@+id/listView_main_eventList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
 </RelativeLayout>

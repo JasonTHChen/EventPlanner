@@ -12,7 +12,35 @@ public class Item {
     private String mUnit;
     private int mQuantity;
 
-    public Item() {
+    public long getItemId() {
+        return mItemId;
+    }
 
+    public void setItemId(long itemId) {
+        this.mItemId = itemId;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        this.mName = name;
+    }
+
+    public String getUnit() {
+        return mUnit;
+    }
+
+    public void setUnit(String unit) {
+        this.mUnit = unit;
+    }
+
+    public int getQuantity() {
+        return mQuantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.mQuantity = quantity;
     }
 }

@@ -18,5 +18,5 @@ public interface IEventDetail {
             + DETAIL_QUANTITY_COLUMN + " INTEGER, "
             + IEventMaster.EVENT_ID_COLUMN + " INTEGER, "
             + "FOREIGN KEY(" + IEventMaster.EVENT_ID_COLUMN + ") REFERENCES "
-            + IEventMaster.EVENT_MASTER_TABLE + "(" + IEventMaster.EVENT_ID_COLUMN + ");" ;
+            + IEventMaster.EVENT_MASTER_TABLE + "(" + IEventMaster.EVENT_ID_COLUMN + "));" ;
 }
