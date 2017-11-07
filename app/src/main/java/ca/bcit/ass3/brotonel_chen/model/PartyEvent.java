@@ -1,7 +1,6 @@
 package ca.bcit.ass3.brotonel_chen.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jason on 03-Nov-2017.
@@ -14,24 +13,38 @@ public class PartyEvent {
     private String mName;
     private String mDate;
     private String mTime;
-    private List<Item>items;
+    private ArrayList<Item> mItems;
 
     public PartyEvent() {
         this.mName = "";
         this.mDate = "";
         this.mTime = "";
-        this.items = new ArrayList<>();
+        this.mItems = new ArrayList<>();
     }
 
     public PartyEvent(String name, String date, String time) {
-        this.items = new ArrayList<>();
+        this.mItems = new ArrayList<>();
         this.mName = name;
         this.mDate = date;
         this.mTime = time;
     }
 
+    public void addItems(Item[] items) {
+        for (int i = 0 ; i < items.length; i++) {
+            this.mItems.add(items[i]);
+        }
+    }
+
     public void addItem(Item item) {
-        this.items.add(item);
+        this.mItems.add(item);
+    }
+
+    public int getItemCount() {
+        return this.mItems.size();
+    }
+
+    public ArrayList<Item> getItems() {
+        return mItems;
     }
 
     public long getEventId() {

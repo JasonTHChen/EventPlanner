@@ -30,7 +30,7 @@ public class EventMasterDao extends Dao {
 
         long result = database.insert(IEventMaster.EVENT_MASTER_TABLE, null, values);
 
-        Log.d(TAG, "insert " + result + " row");
+        Log.d(TAG, "Insert " + result + " row");
 
         return result;
     }
@@ -92,5 +92,24 @@ public class EventMasterDao extends Dao {
         }
         cursor.close();
         return partyEvent;
+    }
+
+    public int delete(PartyEvent partyEvent) {
+        int result =  database.delete(IEventMaster.EVENT_MASTER_TABLE
+                , IEventMaster.EVENT_ID_COLUMN + " = ?", new String[] {String.valueOf(partyEvent.getEventId())});
+        Log.d(TAG, "Delete " + result + " row");
+        return result;
+    }
+
+    public long update(PartyEvent partyEvent) {
+        ContentValues values = new ContentValues();
+        values.put(IEventMaster.EVENT_NAME_COLUMN, partyEvent.getName());
+        values.put(IEventMaster.EVENT_DATE_COLUMN, partyEvent.getDate());
+        values.put(IEventMaster.EVENT_TIME_COLUMN, partyEvent.getTime());
+
+        long result = database.update(IEventMaster.EVENT_MASTER_TABLE, values
+                , IEventMaster.EVENT_ID_COLUMN + " = ?", new String[] {String.valueOf(partyEvent.getEventId())});
+        Log.d(TAG, "Update " + result + " row");
+        return result;
     }
 }

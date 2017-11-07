@@ -12,6 +12,16 @@ public class Item {
     private String mUnit;
     private int mQuantity;
 
+    public Item() {
+
+    }
+
+    public Item(String name, String unit, int quantity) {
+        this.mName = name;
+        this.mUnit = unit;
+        this.mQuantity = quantity;
+    }
+
     public long getItemId() {
         return mItemId;
     }

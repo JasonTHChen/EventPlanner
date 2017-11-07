@@ -1,26 +1,17 @@
 package ca.bcit.ass3.brotonel_chen.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
-import java.util.ArrayList;
+import android.support.v4.app.FragmentActivity;
 
 import ca.bcit.ass3.brotonel_chen.R;
-import ca.bcit.ass3.brotonel_chen.dao.EventMasterDao;
-import ca.bcit.ass3.brotonel_chen.dao.EventMasterValidation;
-import ca.bcit.ass3.brotonel_chen.model.PartyEvent;
 
-public class MainActivity extends AppCompatActivity {
-    private EventMasterDao eventMasterDao;
+public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+/*
         eventMasterDao = new EventMasterDao(this);
 
         eventMasterDao.open();
@@ -39,29 +30,31 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("-------------------");
 
-        ArrayList<PartyEvent> partyEvents = eventMasterDao.findAllPartyEvents();
+        final ArrayList<PartyEvent> partyEvents = eventMasterDao.findAllPartyEvents();
 
         for (PartyEvent event : partyEvents) {
             System.out.println(event.getName());
         }
-
-        ListView eventList = (ListView) findViewById(R.id.listView_main_eventList);
-        EventMasterAdapter adapter = new EventMasterAdapter(MainActivity.this, partyEvents);
-        eventList.setAdapter(adapter);
-
+*/
+        //ListView eventList = (ListView) findViewById(R.id.listView_main_eventList);
+        //EventMasterAdapter adapter = new EventMasterAdapter(MainActivity.this, partyEvents);
+        //eventList.setAdapter(adapter);
+/*
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 PartyEvent selectedEvent = (PartyEvent) adapterView.getItemAtPosition(i);
-                PartyEvent p = eventMasterDao.findPartyEventById(selectedEvent.getEventId());
-                System.out.println(p.getName());
+                //PartyEvent p = eventMasterDao.findPartyEventById(selectedEvent.getEventId());
+                eventMasterDao.delete(selectedEvent);
+                //System.out.println(p.getName());
             }
         });
+        */
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        eventMasterDao.close();
+        //eventMasterDao.close();
     }
 }

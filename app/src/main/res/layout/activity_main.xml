@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="ca.bcit.ass3.brotonel_chen.ui.MainActivity">
 
-    <ListView
-        android:id="@+id/listView_main_eventList"
+    <fragment
+        android:id="@+id/fragment_main_eventMaster"
+        android:name="ca.bcit.ass3.brotonel_chen.ui.EventMasterFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_event_master" />
     
-</RelativeLayout>
+</LinearLayout>
