@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Brotonel_Chen</string>
+    <string name="add_event_title">add an event</string>
+    <string name="search_event_title">Search event</string>
+
+    <string name="addEvent_name">Name:</string>
+    <string name="addEvent_date">Date:</string>
+    <string name="addEvent_time">Time:</string>
+    <string name="addEvent_add">Add</string>
+    <string name="addEvent_cancel">Cancel</string>
 </resources>

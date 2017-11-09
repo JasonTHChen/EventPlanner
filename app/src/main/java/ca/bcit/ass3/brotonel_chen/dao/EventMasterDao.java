@@ -94,9 +94,9 @@ public class EventMasterDao extends Dao {
         return partyEvent;
     }
 
-    public int delete(PartyEvent partyEvent) {
+    public int delete(long eventId) {
         int result =  database.delete(IEventMaster.EVENT_MASTER_TABLE
-                , IEventMaster.EVENT_ID_COLUMN + " = ?", new String[] {String.valueOf(partyEvent.getEventId())});
+                , IEventMaster.EVENT_ID_COLUMN + " = ?", new String[] {String.valueOf(eventId)});
         Log.d(TAG, "Delete " + result + " row");
         return result;
     }

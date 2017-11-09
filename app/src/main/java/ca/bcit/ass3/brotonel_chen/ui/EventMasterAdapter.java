@@ -18,9 +18,11 @@ import ca.bcit.ass3.brotonel_chen.model.PartyEvent;
 
 public class EventMasterAdapter extends ArrayAdapter<PartyEvent> {
     private Context mContext;
+    private ArrayList<PartyEvent> mPartyEvents;
 
     public EventMasterAdapter(Context context, ArrayList<PartyEvent> partyEvents) {
         super(context, 0, partyEvents);
+        this.mPartyEvents = partyEvents;
         this.mContext = context;
     }
 
@@ -30,7 +32,7 @@ public class EventMasterAdapter extends ArrayAdapter<PartyEvent> {
 
         PartyEvent partyEvent = getItem(position);
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_row_layout, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_list_row, parent, false);
         }
 
         TextView eventName = convertView.findViewById(R.id.textView_list_name);

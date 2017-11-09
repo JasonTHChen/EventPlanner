@@ -7,11 +7,9 @@
     android:orientation="vertical"
     tools:context="ca.bcit.ass3.brotonel_chen.ui.MainActivity">
 
-    <fragment
-        android:id="@+id/fragment_main_eventMaster"
-        android:name="ca.bcit.ass3.brotonel_chen.ui.EventMasterFragment"
+    <FrameLayout
+        android:id="@+id/fragment_main_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_event_master" />
+        android:layout_height="match_parent" />
     
 </LinearLayout>

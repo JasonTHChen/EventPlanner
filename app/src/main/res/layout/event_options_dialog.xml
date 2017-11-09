@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/textView_options_edit"
+        android:text="Edit"
+        android:background="?attr/selectableItemBackground"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        android:drawableStart="@drawable/ic_mode_edit_black_24dp"
+        android:gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textView_options_delete"
+        android:text="Delete"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/ic_delete_forever_black_24dp"
+        android:gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textView_options_view"
+        android:text="View"
+        android:textSize="20sp"
+        android:layout_margin="30dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/ic_send_black_24dp"
+        android:gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

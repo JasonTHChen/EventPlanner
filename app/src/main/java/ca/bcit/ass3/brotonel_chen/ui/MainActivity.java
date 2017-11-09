@@ -1,60 +1,122 @@
 package ca.bcit.ass3.brotonel_chen.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import ca.bcit.ass3.brotonel_chen.R;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity implements EventMasterFragment.OnEventSelectListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
-        eventMasterDao = new EventMasterDao(this);
 
-        eventMasterDao.open();
-
-        PartyEvent[] EVENTS = {
-                new PartyEvent("Halloween Party", "October 30, 2017", "6:30PM"),
-                new PartyEvent("Christmas Party", "December 20, 2017", "12:30PM"),
-                new PartyEvent("New Year Eve", "December 31, 2017", "8:00 PM")
-        };
-
-        for (PartyEvent event : EVENTS) {
-            if (EventMasterValidation.isValidEvent(event)) {
-                eventMasterDao.insert(event);
+        if (findViewById(R.id.fragment_main_container) != null) {
+            if (savedInstanceState != null) {
+                return;
             }
         }
 
-        System.out.println("-------------------");
-
-        final ArrayList<PartyEvent> partyEvents = eventMasterDao.findAllPartyEvents();
-
-        for (PartyEvent event : partyEvents) {
-            System.out.println(event.getName());
-        }
-*/
-        //ListView eventList = (ListView) findViewById(R.id.listView_main_eventList);
-        //EventMasterAdapter adapter = new EventMasterAdapter(MainActivity.this, partyEvents);
-        //eventList.setAdapter(adapter);
-/*
-        eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                PartyEvent selectedEvent = (PartyEvent) adapterView.getItemAtPosition(i);
-                //PartyEvent p = eventMasterDao.findPartyEventById(selectedEvent.getEventId());
-                eventMasterDao.delete(selectedEvent);
-                //System.out.println(p.getName());
-            }
-        });
-        */
+        EventMasterFragment eventFragment = new EventMasterFragment();
+        eventFragment.setArguments(getIntent().getExtras());
+        this.getSupportFragmentManager().beginTransaction().add(R.id.fragment_main_container, eventFragment).commit();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //eventMasterDao.close();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                this.finish();
+                startActivity(getIntent());
+            }
+        }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.main_menu, menu);
+        //MenuItem menuItem = menu.findItem(R.id.add_event_action);
+        /*
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem searchMenuItem = menu.findItem(R.id.search_event_action);
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSubmitButtonEnabled(true);
+        */
+        //searchView.setOnQueryTextListener(MainActivity.this);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_event_action:
+
+                Intent i = new Intent(MainActivity.this, AddEventActivity.class);
+                startActivityForResult(i, 1);
+
+                /*
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                View view = this.getLayoutInflater().inflate(R.layout.search_event_dialog, null);
+
+                builder.setView(view);
+                final AlertDialog dialog = builder.create();
+
+                dialog.show();
+*/
+                return true;
+            case R.id.search_event_action:
+                /*
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                View view = this.getLayoutInflater().inflate(R.layout.search_event_dialog, null);
+
+                builder.setView(view);
+                final AlertDialog dialog = builder.create();
+
+                dialog.show();
+                */
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void onEventSelect(long id) {
+        // TODO: for tablet
+        //EventDetailFragment itemFragment = (EventDetailFragment) getSupportFragmentManager().findFragmentById(R.id)
+
+        FragmentManager fm = getSupportFragmentManager();
+        OptionDialog dialog = OptionDialog.getInstance("Option Menu", id);
+        dialog.show(fm, "event_options_dialog");
+
+
+/*
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View view = this.getLayoutInflater().inflate(R.layout.event_options_dialog, null);
+        final TextView editView = (TextView) findViewById(R.id.textView_options_edit);
+        final TextView deleteView = (TextView) findViewById(R.id.textView_options_delete);
+        final TextView viewView = (TextView) findViewById(R.id.textView_options_view);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+        */
+/*
+        EventDetailFragment itemFragment = new EventDetailFragment();
+        Bundle args = new Bundle();
+        args.putLong("eventId", id);
+        itemFragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_main_container, itemFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        */
     }
 }
