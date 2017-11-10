@@ -3,9 +3,14 @@
     <string name="add_event_title">add an event</string>
     <string name="search_event_title">Search event</string>
 
+    <string name="addEvent_title">Add Event</string>
     <string name="addEvent_name">Name:</string>
     <string name="addEvent_date">Date:</string>
     <string name="addEvent_time">Time:</string>
     <string name="addEvent_add">Add</string>
     <string name="addEvent_cancel">Cancel</string>
+
+    <string name="addDetail_title">Add Item</string>
+    <string name="addDetail_unit">Unit:</string>
+    <string name="addDetail_quantity">Quantity:</string>
 </resources>

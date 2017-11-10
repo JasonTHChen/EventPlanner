@@ -42,5 +42,6 @@ public class EventDetailAdapter extends ArrayAdapter<Item> {
         unitView.setText("Unit: " + item.getUnit());
         quantityView.setText("Quantity: " + item.getQuantity());
 
-        return convertView;    }
+        return convertView;
+    }
 }

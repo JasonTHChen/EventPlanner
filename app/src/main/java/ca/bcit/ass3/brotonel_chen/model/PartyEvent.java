@@ -7,8 +7,6 @@ import java.util.ArrayList;
  */
 
 public class PartyEvent {
-    private static final String TAG = PartyEvent.class.getSimpleName();
-
     private long mEventId;
     private String mName;
     private String mDate;
@@ -30,7 +28,7 @@ public class PartyEvent {
     }
 
     public void addItems(Item[] items) {
-        for (int i = 0 ; i < items.length; i++) {
+        for (int i = 0; i < items.length; i++) {
             this.mItems.add(items[i]);
         }
     }

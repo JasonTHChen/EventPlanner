@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,6 +26,8 @@ public class AddEventActivity extends AppCompatActivity {
     Button addButton, cancelButton;
     EditText dateEdit, timeEdit, nameEdit;
     Calendar calendar = Calendar.getInstance();
+    int mode = 0;
+    PartyEvent partyEvent;
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -46,6 +49,22 @@ public class AddEventActivity extends AppCompatActivity {
         nameEdit = (EditText) findViewById(R.id.editText_addEvent_name);
         dateEdit = (EditText) findViewById(R.id.editText_addEvent_date);
         timeEdit = (EditText) findViewById(R.id.editText_addEvent_time);
+
+        mode = getIntent().getIntExtra("mode", 0);
+        long id = getIntent().getLongExtra("id", 0);
+        if (mode == 1) {
+            addButton.setText("Edit");
+            if (id > 0) {
+                EventMasterDao eventMasterDao = new EventMasterDao(this);
+                eventMasterDao.open();
+                partyEvent = eventMasterDao.findPartyEventById(id);
+                nameEdit.setText(partyEvent.getName());
+                dateEdit.setText(partyEvent.getDate());
+                timeEdit.setText(partyEvent.getTime());
+                eventMasterDao.close();
+            }
+        }
+        //String name = getIntent().getStringExtra("name");
     }
 
     private void updateLabel() {
@@ -72,7 +91,7 @@ public class AddEventActivity extends AppCompatActivity {
                 if (selectedHour >= 12) {
                     AM_PM = "PM";
                 }
-                timeEdit.setText( selectedHour + ":" + selectedMinute + " " + AM_PM);
+                timeEdit.setText(selectedHour + ":" + selectedMinute + " " + AM_PM);
             }
         }, hour, minute, true);
 
@@ -82,16 +101,32 @@ public class AddEventActivity extends AppCompatActivity {
 
     public void onAddClick(View v) {
         EventMasterDao eventMaster = new EventMasterDao(AddEventActivity.this);
-        PartyEvent partyEvent = new PartyEvent();
+        if (partyEvent == null) {
+            partyEvent = new PartyEvent();
+        }
         partyEvent.setName(nameEdit.getText().toString());
         partyEvent.setDate(dateEdit.getText().toString());
         partyEvent.setTime(timeEdit.getText().toString());
-        eventMaster.open();
-        eventMaster.insert(partyEvent);
-        eventMaster.close();
-        Intent i = new Intent();
-        setResult(Activity.RESULT_OK, i);
-        finish();
+
+        if (partyEvent.getName().isEmpty()) {
+            Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
+        } else if (partyEvent.getDate().isEmpty()) {
+            Toast.makeText(this, "Date cannot be empty", Toast.LENGTH_SHORT).show();
+        } else if (partyEvent.getTime().isEmpty()) {
+            Toast.makeText(this, "Time cannot be empty", Toast.LENGTH_SHORT).show();
+        } else {
+            eventMaster.open();
+            if (mode == 1) {
+                //System.out.println(partyEvent.getName());
+                eventMaster.update(partyEvent);
+            } else {
+                eventMaster.insert(partyEvent);
+            }
+            eventMaster.close();
+            Intent i = new Intent();
+            setResult(Activity.RESULT_OK, i);
+            finish();
+        }
     }
 
     public void onCancelClick(View v) {

@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import ca.bcit.ass3.brotonel_chen.R;
 
-public class MainActivity extends AppCompatActivity implements EventMasterFragment.OnEventSelectListener {
+public class MainActivity extends AppCompatActivity implements EventMasterFragment.OnEventSelectListener, EventDetailFragment.ItemSelectListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements EventMasterFragme
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 this.finish();
-                startActivity(getIntent());
+                this.startActivity(getIntent());
             }
         }
 
@@ -41,15 +41,6 @@ public class MainActivity extends AppCompatActivity implements EventMasterFragme
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.main_menu, menu);
-        //MenuItem menuItem = menu.findItem(R.id.add_event_action);
-        /*
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        MenuItem searchMenuItem = menu.findItem(R.id.search_event_action);
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
-        */
-        //searchView.setOnQueryTextListener(MainActivity.this);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -57,30 +48,13 @@ public class MainActivity extends AppCompatActivity implements EventMasterFragme
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_event_action:
-
                 Intent i = new Intent(MainActivity.this, AddEventActivity.class);
+                i.putExtra("mode", 0);
                 startActivityForResult(i, 1);
-
-                /*
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                View view = this.getLayoutInflater().inflate(R.layout.search_event_dialog, null);
-
-                builder.setView(view);
-                final AlertDialog dialog = builder.create();
-
-                dialog.show();
-*/
                 return true;
             case R.id.search_event_action:
-                /*
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                View view = this.getLayoutInflater().inflate(R.layout.search_event_dialog, null);
-
-                builder.setView(view);
-                final AlertDialog dialog = builder.create();
-
-                dialog.show();
-                */
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -92,31 +66,14 @@ public class MainActivity extends AppCompatActivity implements EventMasterFragme
         //EventDetailFragment itemFragment = (EventDetailFragment) getSupportFragmentManager().findFragmentById(R.id)
 
         FragmentManager fm = getSupportFragmentManager();
-        OptionDialog dialog = OptionDialog.getInstance("Option Menu", id);
+        EventOptionDialog dialog = EventOptionDialog.getInstance("Option Menu", id);
         dialog.show(fm, "event_options_dialog");
+    }
 
-
-/*
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        View view = this.getLayoutInflater().inflate(R.layout.event_options_dialog, null);
-        final TextView editView = (TextView) findViewById(R.id.textView_options_edit);
-        final TextView deleteView = (TextView) findViewById(R.id.textView_options_delete);
-        final TextView viewView = (TextView) findViewById(R.id.textView_options_view);
-        builder.setView(view);
-        final AlertDialog dialog = builder.create();
-
-        dialog.show();
-        */
-/*
-        EventDetailFragment itemFragment = new EventDetailFragment();
-        Bundle args = new Bundle();
-        args.putLong("eventId", id);
-        itemFragment.setArguments(args);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.fragment_main_container, itemFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        */
+    @Override
+    public void onItemSelect(long id) {
+        FragmentManager fm = getSupportFragmentManager();
+        DetailOptionDialog dialog = DetailOptionDialog.getInstance("Option Menu", id);
+        dialog.show(fm, "detail_options_dialog");
     }
 }
