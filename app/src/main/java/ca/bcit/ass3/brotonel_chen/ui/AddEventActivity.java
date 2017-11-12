@@ -19,7 +19,7 @@ import java.util.Locale;
 
 import ca.bcit.ass3.brotonel_chen.R;
 import ca.bcit.ass3.brotonel_chen.dao.EventMasterDao;
-import ca.bcit.ass3.brotonel_chen.model.PartyEvent;
+import ca.bcit.ass3.brotonel_chen.model.Event;
 
 public class AddEventActivity extends AppCompatActivity {
 
@@ -27,7 +27,8 @@ public class AddEventActivity extends AppCompatActivity {
     EditText dateEdit, timeEdit, nameEdit;
     Calendar calendar = Calendar.getInstance();
     int mode = 0;
-    PartyEvent partyEvent;
+    Event event;
+    private EventMasterDao eventMaster;
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -50,18 +51,19 @@ public class AddEventActivity extends AppCompatActivity {
         dateEdit = (EditText) findViewById(R.id.editText_addEvent_date);
         timeEdit = (EditText) findViewById(R.id.editText_addEvent_time);
 
+        eventMaster = new EventMasterDao(this);
         mode = getIntent().getIntExtra("mode", 0);
         long id = getIntent().getLongExtra("id", 0);
+
         if (mode == 1) {
             addButton.setText("Edit");
             if (id > 0) {
-                EventMasterDao eventMasterDao = new EventMasterDao(this);
-                eventMasterDao.open();
-                partyEvent = eventMasterDao.findPartyEventById(id);
-                nameEdit.setText(partyEvent.getName());
-                dateEdit.setText(partyEvent.getDate());
-                timeEdit.setText(partyEvent.getTime());
-                eventMasterDao.close();
+
+                event = eventMaster.findEventById(id);
+
+                nameEdit.setText(event.getName());
+                dateEdit.setText(event.getDate());
+                timeEdit.setText(event.getTime());
             }
         }
         //String name = getIntent().getStringExtra("name");
@@ -100,33 +102,37 @@ public class AddEventActivity extends AppCompatActivity {
     }
 
     public void onAddClick(View v) {
-        EventMasterDao eventMaster = new EventMasterDao(AddEventActivity.this);
-        if (partyEvent == null) {
-            partyEvent = new PartyEvent();
+        if (event == null) {
+            event = new Event();
         }
-        partyEvent.setName(nameEdit.getText().toString());
-        partyEvent.setDate(dateEdit.getText().toString());
-        partyEvent.setTime(timeEdit.getText().toString());
+        event.setName(nameEdit.getText().toString());
+        event.setDate(dateEdit.getText().toString());
+        event.setTime(timeEdit.getText().toString());
 
-        if (partyEvent.getName().isEmpty()) {
+        if (event.getName().isEmpty()) {
             Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
-        } else if (partyEvent.getDate().isEmpty()) {
+        } else if (event.getDate().isEmpty()) {
             Toast.makeText(this, "Date cannot be empty", Toast.LENGTH_SHORT).show();
-        } else if (partyEvent.getTime().isEmpty()) {
+        } else if (event.getTime().isEmpty()) {
             Toast.makeText(this, "Time cannot be empty", Toast.LENGTH_SHORT).show();
         } else {
-            eventMaster.open();
             if (mode == 1) {
-                //System.out.println(partyEvent.getName());
-                eventMaster.update(partyEvent);
+                //System.out.println(event.getName());
+                eventMaster.update(event);
             } else {
-                eventMaster.insert(partyEvent);
+                eventMaster.insert(event);
             }
-            eventMaster.close();
             Intent i = new Intent();
-            setResult(Activity.RESULT_OK, i);
-            finish();
+            this.setResult(Activity.RESULT_OK, i);
+            this.finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        eventMaster.close();
+        eventMaster = null;
     }
 
     public void onCancelClick(View v) {

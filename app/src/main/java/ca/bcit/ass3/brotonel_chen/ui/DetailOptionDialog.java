@@ -1,6 +1,5 @@
 package ca.bcit.ass3.brotonel_chen.ui;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -19,23 +18,18 @@ import ca.bcit.ass3.brotonel_chen.model.Item;
 
 public class DetailOptionDialog extends DialogFragment {
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return super.onCreateDialog(savedInstanceState);
-    }
-
-    public static DetailOptionDialog getInstance(String title, long itemId) {
+    public static DetailOptionDialog getInstance(long id) {
         DetailOptionDialog dialog = new DetailOptionDialog();
         Bundle args = new Bundle();
-        args.putString("title", title);
-        args.putLong("itemId", itemId);
+        args.putLong("itemId", id);
         dialog.setArguments(args);
         return dialog;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.detail_options_dialog, container);
+        View view = inflater.inflate(R.layout.event_options_dialog, container);
+        getDialog().setTitle("item Options");
         return view;
     }
 
@@ -45,12 +39,11 @@ public class DetailOptionDialog extends DialogFragment {
         final TextView editView = view.findViewById(R.id.textView_options_edit);
         final TextView deleteView = view.findViewById(R.id.textView_options_delete);
         final long itemId = getArguments().getLong("itemId");
+        final EventDetailDao eventDetail = new EventDetailDao(getActivity());
 
         editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventDetailDao eventDetail = new EventDetailDao(getActivity());
-                eventDetail.open();
                 Item item = eventDetail.findItemById(itemId);
                 eventDetail.close();
                 Intent i = new Intent(getActivity(), AddDetailActivity.class);
@@ -64,16 +57,11 @@ public class DetailOptionDialog extends DialogFragment {
         deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventDetailDao eventDetail = new EventDetailDao(getActivity());
-                eventDetail.open();
                 eventDetail.delete(itemId);
                 eventDetail.close();
                 getActivity().recreate();
                 dismiss();
             }
         });
-
-        String title = getArguments().getString("title");
-        getDialog().setTitle(title);
     }
 }

@@ -18,6 +18,7 @@ public class AddDetailActivity extends AppCompatActivity {
     Item item;
     EditText nameEdit, unitEdit, quantityEdit;
     long eventId;
+    private EventDetailDao eventDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,19 +30,19 @@ public class AddDetailActivity extends AppCompatActivity {
         quantityEdit = (EditText) findViewById(R.id.editText_addDetail_quantity);
         final Button addButton = (Button) findViewById(R.id.button_addDetail_add);
         final Button cancelButton = (Button) findViewById(R.id.button_addDetail_cancel);
+
+        eventDetail = new EventDetailDao(AddDetailActivity.this);
         eventId = getIntent().getLongExtra("eventId", 0);
         long itemId = getIntent().getLongExtra("itemId", 0);
         final int mode = getIntent().getIntExtra("mode", 0);
+
         if (mode == 1) {
             addButton.setText("Edit");
             if (itemId > 0) {
-                EventDetailDao eventDetail = new EventDetailDao(AddDetailActivity.this);
-                eventDetail.open();
-                Item item = eventDetail.findItemById(itemId);
+                item = eventDetail.findItemById(itemId);
                 nameEdit.setText(item.getName());
                 unitEdit.setText(item.getUnit());
                 quantityEdit.setText(String.valueOf(item.getQuantity()));
-                eventDetail.close();
             }
         }
 
@@ -49,29 +50,30 @@ public class AddDetailActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventDetailDao eventDetail = new EventDetailDao(AddDetailActivity.this);
                 if (item == null) {
                     item = new Item();
                 }
 
-                item.setName(nameEdit.getText().toString());
-                item.setUnit(unitEdit.getText().toString());
-                item.setQuantity(Integer.parseInt(quantityEdit.getText().toString()));
+                String itemName = nameEdit.getText().toString();
+                String itemUnit = unitEdit.getText().toString();
+                String itemQuantity = quantityEdit.getText().toString();
 
-                if (item.getName().trim().isEmpty()) {
+
+                if (itemName.trim().isEmpty()) {
                     Toast.makeText(AddDetailActivity.this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
-                } else if (item.getUnit().trim().isEmpty()) {
+                } else if (itemUnit.trim().isEmpty()) {
                     Toast.makeText(AddDetailActivity.this, "Unit cannot be empty", Toast.LENGTH_SHORT).show();
-                } else if (item.getQuantity() == 0) {
-                    Toast.makeText(AddDetailActivity.this, "Quantity cannot be 0", Toast.LENGTH_SHORT).show();
+                } else if (itemQuantity.trim().isEmpty()) {
+                    Toast.makeText(AddDetailActivity.this, "Quantity cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    eventDetail.open();
+                    item.setName(itemName);
+                    item.setUnit(itemUnit);
+                    item.setQuantity(Integer.parseInt(itemQuantity));
                     if (mode == 1) {
                         eventDetail.update(item);
                     } else {
                         eventDetail.insert(item, eventId);
                     }
-                    eventDetail.close();
                     Intent i = new Intent();
                     AddDetailActivity.this.setResult(Activity.RESULT_OK, i);
                     AddDetailActivity.this.finish();
@@ -85,5 +87,12 @@ public class AddDetailActivity extends AppCompatActivity {
                 AddDetailActivity.this.finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        eventDetail.close();
+        eventDetail = null;
     }
 }

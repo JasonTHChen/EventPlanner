@@ -1,6 +1,8 @@
 package ca.bcit.ass3.brotonel_chen.model;
 
 /**
+ * Item class stores basic item data.
+ *
  * Created by Jason on 03-Nov-2017.
  */
 

@@ -2,14 +2,13 @@ package ca.bcit.ass3.brotonel_chen.ui;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import ca.bcit.ass3.brotonel_chen.R;
 import ca.bcit.ass3.brotonel_chen.model.Item;
@@ -21,7 +20,7 @@ import ca.bcit.ass3.brotonel_chen.model.Item;
 public class EventDetailAdapter extends ArrayAdapter<Item> {
     private Context mContext;
 
-    public EventDetailAdapter(Context context, ArrayList<Item> items) {
+    public EventDetailAdapter(Context context, List<Item> items) {
         super(context, 0, items);
         this.mContext = context;
     }
@@ -39,10 +38,9 @@ public class EventDetailAdapter extends ArrayAdapter<Item> {
         TextView unitView = convertView.findViewById(R.id.textView_detail_unit);
         TextView quantityView = convertView.findViewById(R.id.textView_detail_quantity);
 
-
-        nameView.setText(Html.fromHtml("<b>Name: </b> " + item.getName()));
-        unitView.setText(Html.fromHtml("<b>Unit: </b> " + item.getUnit()));
-        quantityView.setText(Html.fromHtml("<b>Quantity: </b> " + item.getQuantity()));
+        nameView.setText("Name: " + item.getName());
+        unitView.setText("Unit: " + item.getUnit());
+        quantityView.setText("Quantity: " + item.getQuantity());
 
         return convertView;
     }

@@ -9,23 +9,24 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ca.bcit.ass3.brotonel_chen.R;
-import ca.bcit.ass3.brotonel_chen.model.PartyEvent;
+import ca.bcit.ass3.brotonel_chen.model.Event;
 
 /**
  * Created by Jason on 31-Oct-2017.
  */
 
-public class EventMasterAdapter extends ArrayAdapter<PartyEvent> {
+public class EventMasterAdapter extends ArrayAdapter<Event> {
     private static final String TAG = EventMasterAdapter.class.getSimpleName();
     private Context mContext;
-    private ArrayList<PartyEvent> mPartyEvents;
-    private ArrayList<PartyEvent> tempEvents;
+    private List<Event> mEvents;
+    private List<Event> tempEvents;
 
-    public EventMasterAdapter(Context context, ArrayList<PartyEvent> partyEvents) {
-        super(context, 0, partyEvents);
-        this.mPartyEvents = partyEvents;
+    public EventMasterAdapter(Context context, List<Event> events) {
+        super(context, 0, events);
+        this.mEvents = events;
         this.mContext = context;
     }
 
@@ -33,7 +34,7 @@ public class EventMasterAdapter extends ArrayAdapter<PartyEvent> {
     public View getView(int position, View convertView, ViewGroup parent) {
         //final Activity activity = (Activity) mContext;
 
-        PartyEvent partyEvent = getItem(position);
+        Event event = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_list_row, parent, false);
         }
@@ -42,9 +43,9 @@ public class EventMasterAdapter extends ArrayAdapter<PartyEvent> {
         TextView eventDate = convertView.findViewById(R.id.textView_list_date);
         TextView eventTime = convertView.findViewById(R.id.textView_list_time);
 
-        eventName.setText(partyEvent.getName());
-        eventDate.setText(partyEvent.getDate());
-        eventTime.setText(partyEvent.getTime());
+        eventName.setText(event.getName());
+        eventDate.setText(event.getDate());
+        eventTime.setText(event.getTime());
 
         return convertView;
     }
@@ -55,13 +56,13 @@ public class EventMasterAdapter extends ArrayAdapter<PartyEvent> {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 final FilterResults filterResults = new FilterResults();
-                final ArrayList<PartyEvent> results = new ArrayList<>();
+                final ArrayList<Event> results = new ArrayList<>();
                 if (tempEvents == null) {
-                    tempEvents = mPartyEvents;
+                    tempEvents = mEvents;
                 }
                 if (charSequence != null) {
                     if (tempEvents.size() > 0) {
-                        for (PartyEvent p : tempEvents) {
+                        for (Event p : tempEvents) {
                             if (p.getName().toLowerCase().contains(charSequence.toString())) {
                                 results.add(p);
                             }
@@ -75,7 +76,7 @@ public class EventMasterAdapter extends ArrayAdapter<PartyEvent> {
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mPartyEvents = (ArrayList<PartyEvent>) filterResults.values;
+                mEvents = (ArrayList<Event>) filterResults.values;
                 notifyDataSetChanged();
             }
         };

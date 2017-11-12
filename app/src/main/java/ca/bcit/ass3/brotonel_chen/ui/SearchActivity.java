@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import ca.bcit.ass3.brotonel_chen.R;
 import ca.bcit.ass3.brotonel_chen.dao.EventMasterDao;
-import ca.bcit.ass3.brotonel_chen.model.PartyEvent;
+import ca.bcit.ass3.brotonel_chen.model.Event;
 
 public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     SearchView mSearchView;
@@ -37,11 +37,10 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     @Override
     public boolean onQueryTextSubmit(String query) {
         EventMasterDao eventMasterDao = new EventMasterDao(this);
-        eventMasterDao.open();
-        ArrayList<PartyEvent> partyEvents = eventMasterDao.findPartyEventsByName(query);
+        List<Event> events = eventMasterDao.searchEventsByName(query);
         eventMasterDao.close();
-        if (partyEvents != null) {
-            EventMasterAdapter adapter = new EventMasterAdapter(this, partyEvents);
+        if (events != null) {
+            EventMasterAdapter adapter = new EventMasterAdapter(this, events);
             mListView.setAdapter(adapter);
         }
         return true;

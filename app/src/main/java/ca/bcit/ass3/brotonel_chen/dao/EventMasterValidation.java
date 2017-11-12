@@ -1,17 +1,17 @@
 package ca.bcit.ass3.brotonel_chen.dao;
 
-import ca.bcit.ass3.brotonel_chen.model.PartyEvent;
+import ca.bcit.ass3.brotonel_chen.model.Event;
 
 /**
- * Created by woody on 05-Nov-2017.
+ * Created by Jason on 05-Nov-2017.
  */
 
 public class EventMasterValidation {
 
-    public static boolean isValidEvent(PartyEvent partyEvent) {
-        if (partyEvent.getName() == null || partyEvent.getName().trim().equals("")) {
+    public static boolean isValidEvent(Event event) {
+        if (event.getName() == null || event.getName().trim().equals("")) {
             return false;
-        } else if (partyEvent.getDate() == null || partyEvent.getDate().trim().equals("")) {
+        } else if (event.getDate() == null || event.getDate().trim().equals("")) {
             return false;
         }
 

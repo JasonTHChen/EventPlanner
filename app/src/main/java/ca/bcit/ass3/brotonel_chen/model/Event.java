@@ -1,26 +1,29 @@
 package ca.bcit.ass3.brotonel_chen.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * Event class stores basic event data.
+ *
  * Created by Jason on 03-Nov-2017.
  */
 
-public class PartyEvent {
+public class Event {
     private long mEventId;
     private String mName;
     private String mDate;
     private String mTime;
-    private ArrayList<Item> mItems;
+    private List<Item> mItems;
 
-    public PartyEvent() {
+    public Event() {
         this.mName = "";
         this.mDate = "";
         this.mTime = "";
         this.mItems = new ArrayList<>();
     }
 
-    public PartyEvent(String name, String date, String time) {
+    public Event(String name, String date, String time) {
         this.mItems = new ArrayList<>();
         this.mName = name;
         this.mDate = date;
@@ -33,6 +36,10 @@ public class PartyEvent {
         }
     }
 
+    public void setItems(List<Item> items) {
+        mItems = items;
+    }
+
     public void addItem(Item item) {
         this.mItems.add(item);
     }
@@ -41,7 +48,7 @@ public class PartyEvent {
         return this.mItems.size();
     }
 
-    public ArrayList<Item> getItems() {
+    public List<Item> getItems() {
         return mItems;
     }
 
