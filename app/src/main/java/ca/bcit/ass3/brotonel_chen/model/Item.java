@@ -5,12 +5,20 @@ package ca.bcit.ass3.brotonel_chen.model;
  */
 
 public class Item {
-    private static final String TAG = Item.class.getSimpleName();
-
     private long mItemId;
     private String mName;
     private String mUnit;
     private int mQuantity;
+
+    public Item() {
+
+    }
+
+    public Item(String name, String unit, int quantity) {
+        this.mName = name;
+        this.mUnit = unit;
+        this.mQuantity = quantity;
+    }
 
     public long getItemId() {
         return mItemId;

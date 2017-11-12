@@ -1,67 +1,79 @@
 package ca.bcit.ass3.brotonel_chen.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
-import java.util.ArrayList;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import ca.bcit.ass3.brotonel_chen.R;
-import ca.bcit.ass3.brotonel_chen.dao.EventMasterDao;
-import ca.bcit.ass3.brotonel_chen.dao.EventMasterValidation;
-import ca.bcit.ass3.brotonel_chen.model.PartyEvent;
 
-public class MainActivity extends AppCompatActivity {
-    private EventMasterDao eventMasterDao;
+public class MainActivity extends AppCompatActivity implements EventMasterFragment.OnEventSelectListener, EventDetailFragment.ItemSelectListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        eventMasterDao = new EventMasterDao(this);
-
-        eventMasterDao.open();
-
-        PartyEvent[] EVENTS = {
-                new PartyEvent("Halloween Party", "October 30, 2017", "6:30PM"),
-                new PartyEvent("Christmas Party", "December 20, 2017", "12:30PM"),
-                new PartyEvent("New Year Eve", "December 31, 2017", "8:00 PM")
-        };
-
-        for (PartyEvent event : EVENTS) {
-            if (EventMasterValidation.isValidEvent(event)) {
-                eventMasterDao.insert(event);
+        if (findViewById(R.id.fragment_main_container) != null) {
+            if (savedInstanceState != null) {
+                return;
             }
         }
 
-        System.out.println("-------------------");
-
-        ArrayList<PartyEvent> partyEvents = eventMasterDao.findAllPartyEvents();
-
-        for (PartyEvent event : partyEvents) {
-            System.out.println(event.getName());
-        }
-
-        ListView eventList = (ListView) findViewById(R.id.listView_main_eventList);
-        EventMasterAdapter adapter = new EventMasterAdapter(MainActivity.this, partyEvents);
-        eventList.setAdapter(adapter);
-
-        eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                PartyEvent selectedEvent = (PartyEvent) adapterView.getItemAtPosition(i);
-                PartyEvent p = eventMasterDao.findPartyEventById(selectedEvent.getEventId());
-                System.out.println(p.getName());
-            }
-        });
+        EventMasterFragment eventFragment = new EventMasterFragment();
+        eventFragment.setArguments(getIntent().getExtras());
+        this.getSupportFragmentManager().beginTransaction().add(R.id.fragment_main_container, eventFragment).commit();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        eventMasterDao.close();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                this.finish();
+                this.startActivity(getIntent());
+            }
+        }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_event_action:
+                Intent i = new Intent(MainActivity.this, AddEventActivity.class);
+                i.putExtra("mode", 0);
+                startActivityForResult(i, 1);
+                return true;
+            case R.id.search_event_action:
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void onEventSelect(long id) {
+        // TODO: for tablet
+        //EventDetailFragment itemFragment = (EventDetailFragment) getSupportFragmentManager().findFragmentById(R.id)
+
+        FragmentManager fm = getSupportFragmentManager();
+        EventOptionDialog dialog = EventOptionDialog.getInstance("Option Menu", id);
+        dialog.show(fm, "event_options_dialog");
+    }
+
+    @Override
+    public void onItemSelect(long id) {
+        FragmentManager fm = getSupportFragmentManager();
+        DetailOptionDialog dialog = DetailOptionDialog.getInstance("Option Menu", id);
+        dialog.show(fm, "detail_options_dialog");
     }
 }

@@ -22,6 +22,13 @@ public class EventDetailDao extends Dao {
         super(context);
     }
 
+    /**
+     * insert
+     *
+     * @param item
+     * @param eventId
+     * @return
+     */
     public long insert(Item item, long eventId) {
         ContentValues values = new ContentValues();
         values.put(IEventDetail.DETAIL_NAME_COLUMN, item.getName());
@@ -32,6 +39,33 @@ public class EventDetailDao extends Dao {
         long result = database.insert(IEventDetail.EVENT_DETAIL_TABLE, null, values);
         Log.d(TAG, "insert " + result + " row");
         return result;
+    }
+
+    public long update(Item item) {
+        ContentValues values = new ContentValues();
+        values.put(IEventDetail.DETAIL_NAME_COLUMN, item.getName());
+        values.put(IEventDetail.DETAIL_UNIT_COLUMN, item.getUnit());
+        values.put(IEventDetail.DETAIL_QUANTITY_COLUMN, item.getQuantity());
+
+        long result = database.update(IEventDetail.EVENT_DETAIL_TABLE, values
+                , IEventDetail.DETAIL_ID_COLUMN + " = ?", new String[]{String.valueOf(item.getItemId())});
+        Log.d(TAG, "Update " + result + " row");
+        return result;
+    }
+
+    public Item findItemById(long itemId) {
+        Item item = null;
+        Cursor cursor = database.rawQuery("SELECT DISTINCT * FROM " + IEventDetail.EVENT_DETAIL_TABLE
+                + " WHERE " + IEventDetail.DETAIL_ID_COLUMN + " = '" + itemId + "';", null);
+        if (cursor.moveToFirst()) {
+            item = new Item();
+            item.setItemId(cursor.getLong(0));
+            item.setName(cursor.getString(1));
+            item.setUnit(cursor.getString(2));
+            item.setQuantity(cursor.getInt(3));
+        }
+        cursor.close();
+        return item;
     }
 
     public ArrayList<Item> findItemsByEventId(long eventId) {
@@ -54,5 +88,12 @@ public class EventDetailDao extends Dao {
         }
         cursor.close();
         return items;
+    }
+
+    public int delete(long itemId) {
+        int result = database.delete(IEventDetail.EVENT_DETAIL_TABLE
+                , IEventDetail.DETAIL_ID_COLUMN + " = ?", new String[]{String.valueOf(itemId)});
+        Log.d(TAG, "Delete " + result + " row");
+        return result;
     }
 }
