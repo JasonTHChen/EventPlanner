@@ -3,6 +3,7 @@ package ca.bcit.ass3.brotonel_chen.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,13 @@ import ca.bcit.ass3.brotonel_chen.R;
 
 public class MainActivity extends AppCompatActivity implements EventMasterFragment.OnEventSelectListener, EventDetailFragment.ItemSelectListener {
 
+    private EventMasterFragment eventFragment;
+
+    /**
+     * Create and attach fragments
+     *
+     * @param savedInstanceState - bundle object
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,22 +28,11 @@ public class MainActivity extends AppCompatActivity implements EventMasterFragme
             if (savedInstanceState != null) {
                 return;
             }
+
+            eventFragment = new EventMasterFragment();
+            eventFragment.setArguments(getIntent().getExtras());
+            this.getSupportFragmentManager().beginTransaction().add(R.id.fragment_main_container, eventFragment).commit();
         }
-
-        EventMasterFragment eventFragment = new EventMasterFragment();
-        eventFragment.setArguments(getIntent().getExtras());
-        this.getSupportFragmentManager().beginTransaction().add(R.id.fragment_main_container, eventFragment).commit();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                this.finish();
-                this.startActivity(getIntent());
-            }
-        }
-
     }
 
     @Override
@@ -61,19 +58,29 @@ public class MainActivity extends AppCompatActivity implements EventMasterFragme
         }
     }
 
-    public void onEventSelect(long id) {
-        // TODO: for tablet
-        //EventDetailFragment itemFragment = (EventDetailFragment) getSupportFragmentManager().findFragmentById(R.id)
-
-        FragmentManager fm = getSupportFragmentManager();
-        EventOptionDialog dialog = EventOptionDialog.getInstance("Option Menu", id);
-        dialog.show(fm, "event_options_dialog");
+    public void onEventSelect(long id, boolean state) {
+        EventDetailFragment detailFragment = (EventDetailFragment)
+                getSupportFragmentManager().findFragmentById(R.id.detail_main_fragment);
+        if (detailFragment != null) {
+            // For tablets
+            detailFragment.updateDetailView(id);
+        } else {
+            // For mobiles
+            detailFragment = new EventDetailFragment();
+            Bundle args = new Bundle();
+            args.putLong("eventId", id);
+            detailFragment.setArguments(args);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_main_container, detailFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 
     @Override
     public void onItemSelect(long id) {
         FragmentManager fm = getSupportFragmentManager();
-        DetailOptionDialog dialog = DetailOptionDialog.getInstance("Option Menu", id);
+        DetailOptionDialog dialog = DetailOptionDialog.getInstance(id);
         dialog.show(fm, "detail_options_dialog");
     }
 }

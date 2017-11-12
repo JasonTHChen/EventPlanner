@@ -1,6 +1,8 @@
 package ca.bcit.ass3.brotonel_chen.database;
 
 /**
+ * Interface for Event_Detail table.
+ *
  * Created by Jason on 03-Nov-2017.
  */
 
