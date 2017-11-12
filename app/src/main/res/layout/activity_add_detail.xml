@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alignmentMode="alignBounds"
+                android:orientation="vertical"
+                android:useDefaultMargins="true"
+                tools:context="ca.bcit.ass3.brotonel_chen.ui.AddDetailActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/linearLayout2" android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="@string/addDetail_title"
+            android:textSize="30sp" android:id="@+id/textView"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout3"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+            <TextView
+                android:id="@+id/textView_addDetail_name"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:labelFor="@+id/editText_addDetail_name"
+                android:textStyle="bold"
+                android:text="@string/addEvent_name"
+                android:textSize="20sp"/>
+            <EditText
+                android:id="@+id/editText_addDetail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ems="10"
+                android:inputType="textCapSentences" android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/textView_addDetail_unit"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:labelFor="@+id/editText_addDetail_unit"
+                android:textStyle="bold"
+                android:text="@string/addDetail_unit"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/editText_addDetail_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ems="10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/textView_addDetail_quantity"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:labelFor="@+id/editText_addDetail_quantity"
+                android:textStyle="bold"
+                android:text="@string/addDetail_quantity"
+                android:textSize="20sp" android:layout_weight="1"/>
+            <EditText
+                android:id="@+id/editText_addDetail_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ems="10"
+                android:inputType="number" android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/button_addDetail_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primaryLightColor"
+            android:textColor="@color/primaryTextColor"
+            android:onClick="onAddDetailClick"
+            android:layout_margin="10dp"
+            android:text="@string/addEvent_add" android:layout_weight="1"/>
+        <Button
+            android:id="@+id/button_addDetail_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/secondaryLightColor"
+            android:textColor="@color/primaryTextColor"
+            android:onClick="onCancelDetailClick"
+            android:layout_margin="10dp"
+            android:text="@string/addEvent_cancel" android:layout_weight="1"/>
+    </LinearLayout>
+
+</RelativeLayout>

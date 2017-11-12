@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alignmentMode="alignBounds"
+                android:orientation="vertical"
+                android:useDefaultMargins="true">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/linearLayout2" android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="@string/addEvent_title"
+            android:textSize="30sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout3"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/textView_addDetail_unit"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:labelFor="@+id/editText_addEvent_name"
+                android:textStyle="bold"
+                android:text="@string/addEvent_name"
+                android:textSize="20sp"
+                android:inputType="textCapSentences"/>
+
+            <EditText
+                android:id="@+id/editText_addEvent_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ems="10"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/textView_addEvent_date"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:labelFor="@+id/editText_addEvent_date"
+                android:textStyle="bold"
+                android:text="@string/addEvent_date"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/editText_addEvent_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="date"
+                android:onClick="onDateEditClick"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/textView_addEvent_time"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:labelFor="@+id/editText_addEvent_time"
+                android:textStyle="bold"
+                android:text="@string/addEvent_time"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/editText_addEvent_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="time"
+                android:onClick="onTimeEditClick" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/button_addEvent_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primaryLightColor"
+            android:textColor="@color/primaryTextColor"
+            android:onClick="onAddClick"
+            android:layout_margin="10dp"
+            android:text="@string/addEvent_add" android:layout_weight="1"/>
+        <Button
+            android:id="@+id/button_addEvent_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/secondaryLightColor"
+            android:textColor="@color/primaryTextColor"
+            android:onClick="onCancelClick"
+            android:layout_margin="10dp"
+            android:text="@string/addEvent_cancel" android:layout_weight="1"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
