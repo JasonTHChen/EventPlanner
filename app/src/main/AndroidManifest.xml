@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.bcit.ass3.brotonel_chen">
+    <supports-screens
+        android:normalScreens="true"
+        android:largeScreens="true" />
 
     <application
         android:allowBackup="true"

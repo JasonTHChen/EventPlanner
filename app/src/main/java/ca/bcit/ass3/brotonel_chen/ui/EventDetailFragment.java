@@ -30,22 +30,26 @@ public class EventDetailFragment extends ListFragment {
     private long eventId;
     EventDetailDao eventDetail;
     ItemSelectListener mCallback;
+    ListView lv;
 
     interface ItemSelectListener {
         void onItemSelect(long id);
     }
 
     @Override
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventDetail = new EventDetailDao(getActivity());
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
-        //eventId = getArguments().getLong("eventId");
         final Button addButton = view.findViewById(R.id.button_detail_add);
+        lv = view.findViewById(android.R.id.list);
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,8 +114,12 @@ public class EventDetailFragment extends ListFragment {
         this.eventId = eventId;
         List<Item> items = eventDetail.findItemsByEventId(eventId);
         if (items != null) {
+            lv.setVisibility(View.VISIBLE);
             EventDetailAdapter adapter = new EventDetailAdapter(getActivity(), items);
             this.setListAdapter(adapter);
+        }
+        else {
+            lv.setVisibility(View.GONE);
         }
     }
 }

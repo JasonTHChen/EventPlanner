@@ -2,23 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingEnd="0dp"
+    android:paddingStart="10dp">
 
     <TextView
         android:id="@+id/textView_detail_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name:" />
+        android:text="@string/name"
+        android:textColor="@color/titleColor"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView_detail_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unit:" />
+        android:text="@string/unit"
+        android:textColor="@color/captionColor"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/textView_detail_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quantity:" />
+        android:text="@string/quantity"
+        android:textColor="@color/captionColor"
+        android:textSize="15sp" />
 </LinearLayout>
