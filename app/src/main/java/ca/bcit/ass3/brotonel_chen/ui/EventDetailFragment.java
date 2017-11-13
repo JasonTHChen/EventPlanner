@@ -44,7 +44,7 @@ public class EventDetailFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
-        eventId = getArguments().getLong("eventId");
+        //eventId = getArguments().getLong("eventId");
         final Button addButton = view.findViewById(R.id.button_detail_add);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
