@@ -23,7 +23,6 @@
         android:layout_margin="10dp"
         android:backgroundTint="@color/secondaryLightColor"
         android:textColor="@color/primaryTextColor"
-        android:text="Add"/>
-
+        android:text="@string/add"/>
 
 </LinearLayout>
