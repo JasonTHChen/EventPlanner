@@ -4,7 +4,7 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
 
-    <string name="add_event_title">add an event</string>
+    <string name="add_event_title">Add An Event</string>
     <string name="search_event_title">Search event</string>
 
     <string name="addEvent_title">Add Event</string>
@@ -17,4 +17,8 @@
     <string name="addDetail_title">Add Item</string>
     <string name="addDetail_unit">Unit:</string>
     <string name="addDetail_quantity">Quantity:</string>
+    <string name="name">Name: </string>
+    <string name="quantity">Quantity: </string>
+    <string name="unit">Unit: </string>
+
 </resources>

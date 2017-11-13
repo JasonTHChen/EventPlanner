@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import android.widget.TextView;
 import ca.bcit.ass3.brotonel_chen.R;
 import ca.bcit.ass3.brotonel_chen.dao.Dao;
 import ca.bcit.ass3.brotonel_chen.dao.EventMasterDao;
@@ -30,6 +31,7 @@ public class EventMasterFragment extends ListFragment {
     OnEventSelectListener mCallback;
 
     EventMasterDao eventMaster;
+
 
     interface OnEventSelectListener {
         void onEventSelect(long id, boolean state);
@@ -117,6 +119,7 @@ public class EventMasterFragment extends ListFragment {
         if (events != null) {
             EventMasterAdapter adapter = new EventMasterAdapter(getActivity(), events);
             this.setListAdapter(adapter);
+
         }
     }
 }
