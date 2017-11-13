@@ -6,7 +6,7 @@
 # Not Completed
 * Nothing
 
-# Major Challenges:
+# Major Challenges
 * Connecting database with UI
 * Fragments implementation
 
